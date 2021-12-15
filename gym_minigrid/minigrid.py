@@ -323,8 +323,9 @@ class Box(WorldObj):
 
     def toggle(self, env, pos):
         # Replace the box by its contents
-        env.grid.set(*pos, self.contains)
-        return True
+        # env.grid.set(*pos, self.contains)
+        # return True
+        return False
 
 class Grid:
     """
@@ -711,7 +712,7 @@ class MiniGridEnv(gym.Env):
         # Generate a new random grid at the start of each episode
         # To keep the same grid for each episode, call env.seed() with
         # the same seed before calling env.reset()
-        self._gen_grid(self.width, self.height)
+        self._gen_grid(self.width, self.height) # created room grid based on env given BabyAI-GoTo-v0
 
         # These fields should be defined by _gen_grid
         assert self.agent_pos is not None
@@ -1212,6 +1213,7 @@ class MiniGridEnv(gym.Env):
         # - a textual mission string (instructions for the agent)
         obs = {
             'image': image,
+            'raw_obs': grid.grid,
             'direction': self.agent_dir,
             'mission': self.mission
         }
@@ -1243,12 +1245,13 @@ class MiniGridEnv(gym.Env):
         if close:
             if self.window:
                 self.window.close()
+                self.window = None
             return
 
         if mode == 'human' and not self.window:
             import gym_minigrid.window
             self.window = gym_minigrid.window.Window('gym_minigrid')
-            self.window.show(block=False)
+            # self.window.show(block=False)
 
         # Compute which cells are visible to the agent
         _, vis_mask = self.gen_obs_grid()
@@ -1291,6 +1294,7 @@ class MiniGridEnv(gym.Env):
         if mode == 'human':
             self.window.set_caption(self.mission)
             self.window.show_img(img)
+            self.window.show(block=False)
 
         return img
 

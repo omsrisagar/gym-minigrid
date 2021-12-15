@@ -3,6 +3,8 @@ import numpy as np
 
 # Only ask users to install matplotlib if they actually need it
 try:
+    import matplotlib
+    # matplotlib.use('Qt5Agg') # enable for interactive plots
     import matplotlib.pyplot as plt
 except:
     print('To display the environment in a window, please install matplotlib, eg:')

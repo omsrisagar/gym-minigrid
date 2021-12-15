@@ -214,7 +214,8 @@ class RGBImgPartialObsWrapper(gym.core.ObservationWrapper):
 
         return {
             'mission': obs['mission'],
-            'image': rgb_img_partial
+            'image': rgb_img_partial,
+            'raw_obs': obs['raw_obs']
         }
 
 class FullyObsWrapper(gym.core.ObservationWrapper):
